@@ -21,7 +21,7 @@ def fact(path):
                 for word in re.split("[^a-z]", line):
                     if word in mydict.keys():
                         mydict[word] += 1
-                    elif word != '':#stranggggggggggggggggge
+                    elif word != '':#strangggggggggggggggge
                         mydict[word] = 1
             f.close()
     return mydict

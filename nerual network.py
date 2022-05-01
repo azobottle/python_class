@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 def sigmoid(x):
@@ -11,6 +12,8 @@ if __name__ == '__main__':
     Theta1 = np.array([[-0.4, 0.2, 0.1], [-0.2, 0.4, 0.1]])
     Theta2 = np.array([[0.1, -0.2, 0.1], [0.4, -0.1, 0.1]])
     alpha = 0.3
+    plotx = []
+    ploty = []
     for i in range(200):
         # forward
         a1 = X.T
@@ -20,6 +23,8 @@ if __name__ == '__main__':
         a3 = sigmoid(z3)
         # cost
         J = np.sum(-Y.T * np.log(a3) - (1 - Y.T) * np.log(1 - a3))
+        plotx.append(i)
+        ploty.append(J)
         # backward
         delta3 = a3 - Y.T
         delta2 = np.dot(Theta2.T, delta3) * a2 * (1 - a2)
@@ -29,3 +34,7 @@ if __name__ == '__main__':
         # Theta2[1:, ] = Theta2[1:, ] - alpha * Delta2[1:, ]
         Theta1 = Theta1 - alpha * Delta1
         Theta2 = Theta2 - alpha * Delta2
+    plt.plot(plotx, ploty)
+    plt.xlabel('Time')
+    plt.ylabel('Cost')
+    plt.show()

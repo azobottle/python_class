@@ -30,8 +30,6 @@ if __name__ == '__main__':
         delta2 = np.dot(Theta2.T, delta3) * a2 * (1 - a2)
         Delta1 = np.dot(delta2[1:, ], a1.T)
         Delta2 = np.dot(delta3, a2.T)
-        # Theta1[1:, ] = Theta1[1:, ] - alpha * Delta1[1:, ]
-        # Theta2[1:, ] = Theta2[1:, ] - alpha * Delta2[1:, ]
         Theta1 = Theta1 - alpha * Delta1
         Theta2 = Theta2 - alpha * Delta2
     plt.plot(plotx, ploty)

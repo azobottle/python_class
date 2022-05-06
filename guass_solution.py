@@ -17,10 +17,10 @@ def xiaoqu(arr, n, eps):
                 arr[j, i] -= sum(arr[j, 0:i] * arr[0:i, i].T)
 
         for j in range(i, n):
-            if abs(arr[j, i]) > mymax:
+            if abs(arr[j, i]) > abs(mymax):
                 mymax_index = j
-                mymax = abs(arr[j, i])
-        if mymax < eps:
+                mymax = arr[j, i]
+        if abs(mymax) < eps:
             return False
         else:  # 已得到最大值的下标
             arr[[i, mymax_index], :] = arr[[mymax_index, i], :]

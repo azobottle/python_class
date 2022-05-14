@@ -40,6 +40,7 @@ def huidai(arr, n):
 
 
 def main():
+    print('使用列主元消去法解方程组')
     while True:
         print('输入(y/n)以决定是否计算')
         f = input()

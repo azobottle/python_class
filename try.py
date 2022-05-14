@@ -1,10 +1,22 @@
-import matplotlib.pyplot as plt
+import pandas as pd
 import numpy as np
-
-x = np.linspace(0, 2 * np.pi, 200)
-y = np.sin(x)
-
-#fig, ax = plt.subplots()
-#ax.plot(x, y)
-plt.plot(x,y)
-plt.show()
+people = pd.DataFrame(np.random.randn(5, 5), columns=['a'
+,
+'b'
+,
+'c'
+,
+'d'
+,
+'e'], index=['Joe'
+,
+'Steve'
+,
+'Wes'
+,
+'Jim'
+,
+'Travis'])
+people.iloc[2:3, [1, 2]] = np.nan # Add a few NA values
+print(people)
+print(people.groupby(len).sum())

@@ -1,0 +1,8 @@
+MINNEAPOLIS                   1269km
+OKLAHOMA CITY               778km
+KANSAS CITY                     1073km
+DENVER                             1335km
+NASHVILLE                        663km
+ATLANTA                           376km
+LAS VEGAS                        364km
+CHICAGO                           1153km

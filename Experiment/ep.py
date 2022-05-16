@@ -24,46 +24,57 @@ def main():
 
     print(df)
     eight_pieces = dict(list(df.groupby('CITY')))
-    fig1 = plt.figure('分析城市气温、露点与海洋距离的关系')  # 2x4
-    fig1.text(0.4, 0.95, 'Red for TEMPERATURE,Blue for DEWP', color='y')
-    fig2 = plt.figure('分析每个城市的风速和风向的分布情况')  # 2x4
-    fig2.text(0.4, 0.95, 'Red for WIND-AVG-SPEED,Blue for WIND-DIRECTION', color='y')
-    fig3 = plt.figure('分析气温和气压的关系')  # 2x4
-    fig3.text(0.4, 0.95, 'Red for TEMPERATURE,Blue for PRESSURE', color='y')
-    cnt = 1
+    fig1 = plt.figure('分析城市气温与海洋距离的关系')
+    p1 = fig1.add_subplot()
+    p1.set_xlabel('TIME/DAY')
+    p1.set_ylabel('TEMPERATURE/°C')
+
+    fig2 = plt.figure('分析城市露点与海洋距离的关系')
+    p2 = fig2.add_subplot()
+    p2.set_xlabel('TIME/DAY')
+    p2.set_ylabel('DEWP/°C')
     for city in city2dist.keys():
-        # small_pieces = eight_pieces[city].groupby(myfunc, axis=0)
-        # print(eight_pieces[city])
         x = range(1, 366)
-        y11 = []
-        y12 = []
+        y1 = []
+        y2 = []
         y21 = []
         y22 = []
         y3 = []
         for day_pieces in list(eight_pieces[city].groupby('DAY')):
-            y11.append(day_pieces[1]["TEMPERATURE"].mean())
-            y12.append(day_pieces[1]["DEWP"].mean())
+            y1.append(day_pieces[1]["TEMPERATURE"].mean())
+            y2.append(day_pieces[1]["DEWP"].mean())
             y21.append(day_pieces[1]["WIND-AVG-SPEED"].mean())
             y22.append(day_pieces[1]["WIND-DIRECTION"].mean())
             y3.append(day_pieces[1]["PRESSURE"].mean())
-        p1 = fig1.add_subplot(2, 4, cnt)
-        p1.plot(x, y11, '*', color='r')
-        p1.plot(x, y12, '.', color='b')
-        p1.set_title(city + '(' + city2dist[city] + ')')
-        # p1.set_ylim(-15,30)
+        p1.plot(x, y1, linewidth=1.5, linestyle='-', label=city + '(' + city2dist[city] + ')')
+        p2.plot(x, y2, linewidth=1.5, linestyle='-', label=city + '(' + city2dist[city] + ')')
 
-        p21 = fig2.add_subplot(2, 4, cnt)
-        p21.plot(x, y21, color='r')
-        p21.set_title(city)
-        p22 = p21.twinx()
-        p22.plot(x, y22, color='b')
+        SD = plt.figure()
+        SD.text(0.5, 0, s=city)
+        P31 = SD.add_subplot()
+        P31.plot(x, y21, linewidth=1.5, linestyle='-', label='WIND-AVG-SPEED', color='r')
+        P31.set_ylabel('WIND-AVG-SPEED')
+        P32 = P31.twinx()
+        P32.plot(x, y22, linewidth=1.5, linestyle='-', label='WIND-DIRECTION', color='y')
+        P32.set_ylabel('WIND-DIRECTION')
+        P31.set_xlabel('TIME/DAY')
+        P31.legend(loc="upper left")
+        P32.legend(loc="upper right")
 
-        p31 = fig3.add_subplot(2, 4, cnt)
-        p31.plot(x, y11, '*', color='r')
-        p32 = p31.twinx()
-        p32.plot(x, y3, color='b')
+        TP = plt.figure()
+        TP.text(0.5, 0, s=city)
+        P41 = TP.add_subplot()
+        P41.plot(x, y1, linewidth=1.5, linestyle='-', label='TEMPERATURE/°C', color='r')
+        P41.set_ylabel('TEMPERATURE/°C')
+        P42 = P41.twinx()
+        P42.plot(x, y3, linewidth=1.5, linestyle='-', label='PRESSURE/KPa', color='y')
+        P42.set_ylabel('PRESSURE/KPa')
+        P41.set_xlabel('TIME/DAY')
+        P41.legend(loc="upper left")
+        P42.legend(loc="upper right")
 
-        cnt += 1
+    p1.legend()
+    p2.legend()
     plt.show()
 
 

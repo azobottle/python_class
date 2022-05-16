@@ -2,10 +2,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-def myfunc(dict):
-    return dict["DATE"].split('T')[0]
-
-
 def main():
     df = pd.read_excel("D:\python_class\Experiment\weatherData.xlsx")
     f = open("D:\python_class\Experiment\distance.txt", 'r')
@@ -29,11 +25,11 @@ def main():
     print(df)
     eight_pieces = dict(list(df.groupby('CITY')))
     fig1 = plt.figure('分析城市气温、露点与海洋距离的关系')  # 2x4
-    fig1.text(0.3, 0.95, 'Red for TEMPERATURE,Blue for DEWP', color='y')
+    fig1.text(0.4, 0.95, 'Red for TEMPERATURE,Blue for DEWP', color='y')
     fig2 = plt.figure('分析每个城市的风速和风向的分布情况')  # 2x4
-    fig2.text(0.3, 0.95, 'Red for WIND-AVG-SPEED,Blue for WIND-DIRECTION', color='y')
+    fig2.text(0.4, 0.95, 'Red for WIND-AVG-SPEED,Blue for WIND-DIRECTION', color='y')
     fig3 = plt.figure('分析气温和气压的关系')  # 2x4
-    fig3.text(0.3, 0.95, 'Red for TEMPERATURE,Blue for PRESSURE', color='y')
+    fig3.text(0.4, 0.95, 'Red for TEMPERATURE,Blue for PRESSURE', color='y')
     cnt = 1
     for city in city2dist.keys():
         # small_pieces = eight_pieces[city].groupby(myfunc, axis=0)
@@ -53,10 +49,11 @@ def main():
         p1 = fig1.add_subplot(2, 4, cnt)
         p1.plot(x, y11, '*', color='r')
         p1.plot(x, y12, '.', color='b')
-        p1.set_title(city)
+        p1.set_title(city + '(' + city2dist[city] + ')')
+        # p1.set_ylim(-15,30)
 
         p21 = fig2.add_subplot(2, 4, cnt)
-        p21.scatter(x, y21, color='r')
+        p21.plot(x, y21, color='r')
         p21.set_title(city)
         p22 = p21.twinx()
         p22.plot(x, y22, color='b')
